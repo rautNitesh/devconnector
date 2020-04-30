@@ -4,12 +4,20 @@
   "description": "Dev connector MERN stack application",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js"
+    "start": "node server.js",
+    "server": "nodemon server.js"
   },
   "author": "Nitesh Raut",
   "license": "MIT",
   "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.19.0",
     "express": "^4.17.1",
+    "gravatar": "^1.8.0",
+    "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.9.10"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.3"
   }
 }
