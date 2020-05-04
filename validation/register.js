@@ -24,7 +24,7 @@ module.exports = validateRegisterInput = (data) => {
     errors.password = "password field is required";
   }
 
-  if (Validator.equals(data.password, data.password2)) {
+  if (!Validator.equals(data.password, data.password2)) {
     errors.password2 = "password mis match";
   }
   return {

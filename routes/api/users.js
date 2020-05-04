@@ -17,34 +17,33 @@ router.post("/register", (req, res) => {
   }
   User.findOne({ email: req.body.email }).then((user) => {
     if (user) {
-      errors.email = "email not found";
-      res.status(400).status(errors);
-    } else {
-      const avatar = gravatar.url(req.body.email, {
-        s: "200", //size
-        r: "pg", //ratings
-        d: "mm", //default
-      });
-      const newUser = new User({
-        name: req.body.name,
-        password: req.body.password,
-        email: req.body.email,
-        avatar,
-      });
-      bcrypt.genSalt(10, (err, salt) => {
-        bcrypt.hash(newUser.password, salt, (err, hash) => {
-          if (err) console.log(err);
-
-          newUser.password = hash;
-          newUser
-            .save()
-            .then((user) => {
-              res.json(user);
-            })
-            .catch((err) => console.log(err));
-        });
-      });
+      errors.email = "email already exists";
+      return res.status(400).status(errors);
     }
+    const avatar = gravatar.url(req.body.email, {
+      s: "200", //size
+      r: "pg", //ratings
+      d: "mm", //default
+    });
+    const newUser = new User({
+      name: req.body.name,
+      password: req.body.password,
+      email: req.body.email,
+      avatar,
+    });
+    bcrypt.genSalt(10, (err, salt) => {
+      bcrypt.hash(newUser.password, salt, (err, hash) => {
+        if (err) console.log(err);
+
+        newUser.password = hash;
+        newUser
+          .save()
+          .then((user) => {
+            return res.json(user);
+          })
+          .catch((err) => console.log(err));
+      });
+    });
   });
 });
 
