@@ -37,3 +37,6 @@ img {
 .form-control::placeholder {
   color: #bbb !important;
 }
+.loader:empty {
+  background: url("https://thumbs.gfycat.com/RewardingDisfiguredAnnelid-size_restricted.gif");
+}
