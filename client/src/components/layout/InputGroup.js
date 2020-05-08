@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import classnames from "classnames";
 
-const TextInputField = ({
+const InputGroup = ({
   type,
   placeholder,
   name,
@@ -10,9 +10,15 @@ const TextInputField = ({
   onChange,
   error,
   text,
+  icon,
 }) => {
   return (
-    <div className="form-group">
+    <div className="input-group mb-3">
+      <div className="input-group-prepend">
+        <div className="input-group-text">
+          <i className={icon} />
+        </div>
+      </div>
       <input
         type={type}
         placeholder={placeholder}
@@ -24,22 +30,21 @@ const TextInputField = ({
         onChange={onChange}
       />
       {error && <div className="invalid-feedback">{error}</div>}
-      {text && <small className="form-text text-muted">{text}</small>}
     </div>
   );
 };
 
-TextInputField.defaults = {
-  type: "text",
-};
-
-TextInputField.propTypes = {
+InputGroup.propTypes = {
   type: PropTypes.string.isRequired,
   placeholder: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   value: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
   error: PropTypes.string,
-  text: PropTypes.string,
+  icon: PropTypes.string.isRequired,
 };
-export default TextInputField;
+InputGroup.defautl = {
+  type: "text",
+};
+
+export default InputGroup;

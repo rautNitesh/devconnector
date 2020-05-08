@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter as Router, Route } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import "./App.css";
 import Navbar from "./components/layout/Navbar";
 import Footer from "./components/layout/Footer";
@@ -14,6 +14,7 @@ import jwt_decode from "jwt-decode";
 import setAuthLogin from "./utils/setAuthToken";
 import { setCurrentUser, logoutUser } from "./action/authAction";
 import { clearCurrentUser } from "./action/profileAction";
+import CreateProfile from "./components/create-profile/CreateProfile";
 
 if (localStorage.jwtToken) {
   setAuthLogin(localStorage.jwtToken);
@@ -38,7 +39,16 @@ function App() {
           <div className="container">
             <Route exact path="/register" component={Register} />
             <Route exact path="/login" component={Login} />
-            <PrivateRoute exact path="/dashboard" component={Dashboard} />
+            <Switch>
+              <PrivateRoute exact path="/dashboard" component={Dashboard} />
+            </Switch>
+            <Switch>
+              <PrivateRoute
+                exact
+                path="/create-profile"
+                component={CreateProfile}
+              />
+            </Switch>
           </div>
           <Footer />
         </div>
