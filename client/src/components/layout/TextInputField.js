@@ -9,6 +9,7 @@ const TextInputField = ({
   value,
   onChange,
   error,
+  disabled,
   text,
 }) => {
   return (
@@ -17,6 +18,7 @@ const TextInputField = ({
         type={type}
         placeholder={placeholder}
         name={name}
+        disabled={disabled}
         className={classnames("form-control form-control-lg", {
           "is-invalid": error,
         })}
@@ -31,9 +33,10 @@ const TextInputField = ({
 
 TextInputField.defaults = {
   type: "text",
-};
+1};
 
 TextInputField.propTypes = {
+  disabled: PropTypes.string.isRequired,
   type: PropTypes.string.isRequired,
   placeholder: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,

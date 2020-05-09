@@ -3,6 +3,7 @@ import {
   PROFILE_LOADING,
   CLEAR_CURRENT_USER,
   GET_ERRORS,
+  SET_CURRENT_USER,
 } from "./types";
 import axios from "axios";
 
@@ -22,6 +23,24 @@ export const getCurrentProfile = () => (dispatch) => {
         payload: {},
       });
     });
+};
+export const deleteProfile = () => (dispatch) => {
+  if (window.confirm("Are You Sure To Delete Your Profile Permanantly")) {
+    axios
+      .delete("/api/profile")
+      .then((res) => {
+        dispatch({
+          type: SET_CURRENT_USER,
+          payload: {},
+        });
+      })
+      .catch((err) => {
+        dispatch({
+          type: GET_ERRORS,
+          payload: err.response.data,
+        });
+      });
+  }
 };
 export const createProfile = (userData, history) => (dispatch) => {
   axios

@@ -6,7 +6,8 @@ import TextInputField from "../layout/TextInputField";
 import SelectListGroup from "../layout/SelectListGroup";
 import InputGroup from "../layout/InputGroup";
 import TextAreaField from "../layout/TextAreaField";
-import { createProfile } from "../../action/profileAction";
+import { createProfile, getCurrentProfile } from "../../action/profileAction";
+import isMatch from "../../validation/isMatch";
 
 class CreateProfile extends Component {
   constructor(props) {
@@ -15,7 +16,6 @@ class CreateProfile extends Component {
       displaysocialinputs: false,
       handle: "",
       website: "",
-      location: "",
       skills: "",
       status: "",
       facebook: "",
@@ -27,10 +27,50 @@ class CreateProfile extends Component {
       errors: {},
     };
   }
+  componentDidMount() {
+    this.props.getCurrentProfile();
+  }
   componentWillReceiveProps(nextProps) {
     if (nextProps.errors) {
       this.setState({
         errors: nextProps.errors,
+      });
+    }
+    if (nextProps.profile.profile) {
+      const profile = nextProps.profile.profile.profile;
+      const skillsCsv = profile.skills.join(",");
+      profile.handle = !isMatch(profile.handle) ? profile.handle : "";
+      profile.company = !isMatch(profile.company) ? profile.company : "";
+      profile.website = !isMatch(profile.website) ? profile.website : "";
+      profile.location = !isMatch(profile.location) ? profile.location : "";
+      profile.githubusername = !isMatch(profile.githubusername)
+        ? profile.githubusername
+        : "";
+      profile.social = !isMatch(profile.social) ? profile.social : {};
+      profile.facebook = !isMatch(profile.social.facebook)
+        ? profile.social.facebook
+        : "";
+      profile.youtube = !isMatch(profile.social.youtube)
+        ? profile.social.youtube
+        : "";
+      profile.instagram = !isMatch(profile.social.instagram)
+        ? profile.social.instagram
+        : "";
+      profile.linkedin = !isMatch(profile.social.linkedin)
+        ? profile.social.linkedin
+        : "";
+      this.setState({
+        handle: profile.handle,
+        website: profile.website,
+        skills: skillsCsv,
+        location: profile.location,
+        status: profile.status,
+        facebook: profile.social.facebook,
+        instagram: profile.social.instagram,
+        linkedin: profile.social.linkedin,
+        youtube: profile.social.youtube,
+        githubusername: profile.githubusername,
+        bio: profile.bio,
       });
     }
   }
@@ -40,8 +80,8 @@ class CreateProfile extends Component {
       handle: this.state.handle,
       website: this.state.website,
       skills: this.state.skills,
-      status: this.state.status,
       location: this.state.location,
+      status: this.state.status,
       facebook: this.state.facebook,
       instagram: this.state.instagram,
       linkedin: this.state.linkedin,
@@ -122,12 +162,7 @@ class CreateProfile extends Component {
         <div className="container ">
           <div className="row">
             <div className="col-md-8 m-auto">
-              <h1 className="display-4 pb-4 text-center">
-                Create Your Profile
-              </h1>
-              <p className="lead text-center">
-                Let's Get Some Info To Make Your Profile Standout.
-              </p>
+              <h1 className="display-4 pb-4 text-center">Edit Your Profile</h1>
               <small className="d-block text-muted">*=Required</small>
               <form onSubmit={this.onSubmit}>
                 <TextInputField
@@ -160,14 +195,6 @@ class CreateProfile extends Component {
                   value={this.state.company}
                   onChange={this.onChange}
                   error={errors.company}
-                />
-                <TextInputField
-                  placeholder="Your address "
-                  text="Enter where you live"
-                  name="location"
-                  value={this.state.location}
-                  onChange={this.onChange}
-                  error={errors.location}
                 />
                 <TextInputField
                   placeholder="Github Username"
@@ -215,6 +242,7 @@ class CreateProfile extends Component {
 }
 
 CreateProfile.propTypes = {
+  getCurrentProfile: PropTypes.func.isRequired,
   createProfile: PropTypes.func.isRequired,
   profile: PropTypes.object.isRequired,
   errors: PropTypes.object.isRequired,
@@ -224,6 +252,6 @@ const mapStateToProps = (state) => ({
   profile: state.profile,
   errors: state.error,
 });
-export default connect(mapStateToProps, { createProfile })(
+export default connect(mapStateToProps, { createProfile, getCurrentProfile })(
   withRouter(CreateProfile)
 );
