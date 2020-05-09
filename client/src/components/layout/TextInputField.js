@@ -33,9 +33,9 @@ const TextInputField = ({
 
 TextInputField.defaults = {
   type: "text",
-1};
+};
 
-TextInputField.propTypes = ({
+TextInputField.propTypes = {
   disabled: PropTypes.string.isRequired,
   type: PropTypes.string.isRequired,
   placeholder: PropTypes.string.isRequired,
@@ -44,5 +44,5 @@ TextInputField.propTypes = ({
   onChange: PropTypes.func.isRequired,
   error: PropTypes.string,
   text: PropTypes.string,
-});
+};
 export default TextInputField;

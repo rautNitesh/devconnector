@@ -77,6 +77,10 @@ const ProfileSchema = new Schema({
       to: {
         type: Date,
       },
+      isCurrent: {
+        type: Boolean,
+        default: false,
+      },
       fieldofstudy: {
         type: String,
         required: true,

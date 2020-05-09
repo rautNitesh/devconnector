@@ -4,17 +4,18 @@ import TextInputField from "../layout/TextInputField";
 import TextAreaField from "../layout/TextAreaField";
 import { Link, withRouter } from "react-router-dom";
 import PropTypes from "prop-types";
-import { addExperience } from "../../action/profileAction";
-class AddExperience extends Component {
+import { addEducation } from "../../action/profileAction";
+class AddEducation extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      title: "",
-      company: "",
+      degree: "",
+      school: "",
       from: "",
       to: "",
       disabled: false,
       isCurrent: false,
+      fieldofstudy: "",
       location: "",
       description: "",
       errors: {},
@@ -35,16 +36,17 @@ class AddExperience extends Component {
   onSubmit = (e) => {
     e.preventDefault();
     const expData = {
-      title: this.state.title,
-      company: this.state.company,
+      degree: this.state.degree,
+      school: this.state.school,
       from: this.state.from,
       to: this.state.to,
       disabled: this.state.disabled,
       isCurrent: this.state.isCurrent,
-      location: this.state.location,
+      fieldofstudy: this.state.fieldofstudy,
       description: this.state.description,
+      location: this.state.location,
     };
-    this.props.addExperience(expData, this.props.history);
+    this.props.addEducation(expData, this.props.history);
   };
   onCheck = (e) => {
     this.setState({
@@ -62,28 +64,28 @@ class AddExperience extends Component {
               <Link to="/dashboard" className="btn btn-light">
                 Go Back
               </Link>
-              <h1 className="display-4 text-center">Add Your Experience</h1>
+              <h1 className="display-4 text-center">Add Your Education</h1>
               <small className="text-muted">*=Required</small>
               <form onSubmit={this.onSubmit}>
                 <TextInputField
-                  placeholder="Job Title"
-                  text="Enter your job title"
-                  name="title"
-                  value={this.state.title}
+                  placeholder="degree"
+                  text="Enter your degree name"
+                  name="degree"
+                  value={this.state.degree}
                   onChange={this.onChange}
-                  error={errors.title}
+                  error={errors.degree}
                 />
                 <TextInputField
-                  placeholder="Company name"
-                  text="Enter your company name"
-                  name="company"
-                  value={this.state.company}
+                  placeholder="school"
+                  text="Enter your school name"
+                  name="school"
+                  value={this.state.school}
                   onChange={this.onChange}
-                  error={errors.company}
+                  error={errors.school}
                 />
                 <TextInputField
-                  placeholder="Company location"
-                  text="Enter your company location"
+                  placeholder="school location"
+                  text="Enter your school location"
                   name="location"
                   value={this.state.location}
                   onChange={this.onChange}
@@ -124,6 +126,13 @@ class AddExperience extends Component {
                   onChange={this.onChange}
                   error={errors.description}
                 />
+                <TextAreaField
+                  placeholder="field of study "
+                  name="fieldofstudy"
+                  value={this.state.fieldofstudy}
+                  onChange={this.onChange}
+                  error={errors.fieldofstudy}
+                />
                 <input
                   type="submit"
                   value="Submit"
@@ -137,8 +146,8 @@ class AddExperience extends Component {
     );
   }
 }
-AddExperience.propTypes = {
-  addExperience: PropTypes.func.isRequired,
+AddEducation.propTypes = {
+  addEducation: PropTypes.func.isRequired,
   profile: PropTypes.object.isRequired,
   errors: PropTypes.object.isRequired,
 };
@@ -146,6 +155,6 @@ const mapStateToProps = (state) => ({
   profile: state.profile,
   errors: state.error,
 });
-export default connect(mapStateToProps, { addExperience })(
-  withRouter(AddExperience)
+export default connect(mapStateToProps, { addEducation })(
+  withRouter(AddEducation)
 );

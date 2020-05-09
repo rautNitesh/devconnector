@@ -7,15 +7,21 @@ module.exports = validategExperienceInput = (data) => {
   data.title = !isMatch(data.title) ? data.title : "";
   data.comapny = !isMatch(data.company) ? data.company : "";
   data.from = !isMatch(data.from) ? data.from : "";
-
+  if (data.isCurrent === false) {
+    data.to = !isMatch(data.to) ? data.to : "";
+    if (Validator.isEmpty(data.to)) {
+      errors.to =
+        "To field is required, if it is current job please check the current box";
+    }
+  }
   if (Validator.isEmpty(data.title)) {
     errors.title = "title field is required";
   }
   if (Validator.isEmpty(data.company)) {
-    errors.company = "title field is required";
+    errors.company = "company name  field is required";
   }
   if (Validator.isEmpty(data.from)) {
-    errors.from = "title field is required";
+    errors.from = "from date field is required";
   }
 
   return {

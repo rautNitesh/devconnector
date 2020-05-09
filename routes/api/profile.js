@@ -151,6 +151,7 @@ router.post(
         school: req.body.school,
         degree: req.body.degree,
         from: req.body.from,
+        isCurrent: req.body.isCurrent,
         to: req.body.to,
         fieldofstudy: req.body.fieldofstudy,
         description: req.body.description,

@@ -9,6 +9,13 @@ module.exports = validategEducationInput = (data) => {
   data.from = !isMatch(data.from) ? data.from : "";
   data.fieldofstudy = !isMatch(data.fieldofstudy) ? data.fieldofstudy : "";
 
+  if (data.isCurrent === false) {
+    data.to = !isMatch(data.to) ? data.to : "";
+    if (Validator.isEmpty(data.to)) {
+      errors.to =
+        "To field is required, if it is current job please check the current box";
+    }
+  }
   if (Validator.isEmpty(data.school)) {
     errors.title = "title field is required";
   }
