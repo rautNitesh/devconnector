@@ -178,7 +178,7 @@ router.delete(
   "/experience/:exp_id",
   passport.authenticate("jwt", { session: false }),
   (req, res) => [
-    Profile.findOne({ user: req.user.exp_id }).then((profile) => {
+    Profile.findOne({ user: req.user.id }).then((profile) => {
       const removeIndex = profile.experience
         .map((item) => item.id)
         .indexOf({ _id: req.params.exp_id });
@@ -191,7 +191,7 @@ router.delete(
   "/",
   passport.authenticate("jwt", { session: false }),
   (req, res) => [
-    Profile.findOneAndRemove({ user: req.user.exp_id }).then((profile) => {
+    Profile.findOneAndRemove({ user: req.user.id }).then((profile) => {
       User.findByOneAndRemove({ _id: req.user.id }).then(() =>
         res.json({ success: true })
       );

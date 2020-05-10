@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { getCurrentProfile, deleteProfile } from "../../action/profileAction";
 import AddButtons from "./AddButtons";
 import PropTypes from "prop-types";
+import Experience from "./Experience";
 
 class Dashboard extends Component {
   componentDidMount() {
@@ -26,7 +27,7 @@ class Dashboard extends Component {
               Hello <Link to={`/profile/${users.handle}`}>{users.name}</Link>
             </h3>
             <AddButtons />
-            {/*Edu & Exp section */}
+            <Experience experience={profile.profile.experience} />
             <div style={{ marginBottom: "60px" }}>
               <button
                 onClick={this.DeleteProfile}
