@@ -80,18 +80,37 @@ export const addEducation = (userData, history) => (dispatch) => {
     });
 };
 
-export const deleteExperience = (id) => (dispatch) => {
-  axios.delete(`/api/profile/experience/${id}`).then((res) =>
-    dispatch({
-      type: GET_PROFILE,
-      payload: res.data,
-    }).catch((err) => {
+export const deleteExperience = (id, history) => (dispatch) => {
+  axios
+    .delete(`/api/profile/experience/${id}`)
+    .then((res) => {
+      dispatch({
+        type: GET_PROFILE,
+        payload: res.data,
+      });
+    }, history.push("/dashboard"))
+    .catch((err) => {
       dispatch({
         type: GET_ERRORS,
         payload: err.response.data,
       });
-    })
-  );
+    });
+};
+export const deleteEducation = (id, history) => (dispatch) => {
+  axios
+    .delete(`/api/profile/education/${id}`)
+    .then((res) => {
+      dispatch({
+        type: GET_PROFILE,
+        payload: res.data,
+      });
+    }, history.push("/dashboard"))
+    .catch((err) => {
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data,
+      });
+    });
 };
 
 export const setProfileLoading = () => {

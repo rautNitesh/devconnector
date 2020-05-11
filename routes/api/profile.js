@@ -183,7 +183,10 @@ router.delete(
         .map((item) => item.id)
         .indexOf({ _id: req.params.exp_id });
       profile.experience.splice(removeIndex, 1);
-      profile.save().then((profile) => res.json(profile));
+      profile
+        .save()
+        .then((profile) => res.json(profile))
+        .catch((err) => res.status(404).json(err));
     }),
   ]
 );
